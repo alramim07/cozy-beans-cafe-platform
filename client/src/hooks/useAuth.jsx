@@ -1,8 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, createContext, useContext } from 'react';
 import api from '../api.js';
 
 // Auth context: manages admin authentication state
-const AuthContext = React.createContext(null);
+const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [admin, setAdmin] = useState(null);
@@ -63,10 +63,7 @@ export function AuthProvider({ children }) {
 }
 
 export function useAuth() {
-  const ctx = React.useContext(AuthContext);
+  const ctx = useContext(AuthContext);
   if (!ctx) throw new Error('useAuth must be used within AuthProvider');
   return ctx;
 }
-
-// Need React for the context
-import React from 'react';
