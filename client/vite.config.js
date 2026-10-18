@@ -9,7 +9,10 @@ export default defineConfig({
     port: 5173,
     // Proxy API calls to Express during development
     proxy: {
-      '/api': 'http://localhost:5000',
+      '/api': {
+        target: 'http://127.0.0.1:5000',
+        changeOrigin: true,
+      },
     },
   },
 });

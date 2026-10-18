@@ -9,6 +9,17 @@ const menuRoutes = require('./routes/menuRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 
+// Handle uncaught exceptions
+process.on('uncaughtException', (err) => {
+  console.error('UNCAUGHT EXCEPTION:', err);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('UNHANDLED REJECTION:', reason);
+  process.exit(1);
+});
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/olive_oak_cafe';
@@ -16,17 +27,17 @@ const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
 
 // ---------- Security & Middleware ----------
 app.use(helmet({
-  crossOriginResourcePolicy: { policy: 'cross-origin' }, // allow images from Cloudinary etc.
-  contentSecurityPolicy: false, // we'll keep it simple for this project
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+  contentSecurityPolicy: false,
 }));
 
 app.use(cors({
   origin: CLIENT_URL,
-  credentials: true, // allow cookies to be sent
+  credentials: true,
 }));
 
 app.use(express.json());
-app.use(cookieParser()); // parse cookies for httpOnly JWT
+app.use(cookieParser());
 
 // Simple request logger
 app.use((req, res, next) => {
@@ -60,10 +71,11 @@ mongoose
   .connect(MONGO_URI)
   .then(() => {
     console.log('MongoDB connected');
-    app.listen(PORT, '127.0.0.1', () => {
+    const server = app.listen(PORT, '127.0.0.1', () => {
       console.log(`Olive & Oak API running on http://localhost:${PORT}`);
       console.log('Server is listening...');
-    }).on('error', (err) => {
+    });
+    server.on('error', (err) => {
       console.error('Server listen error:', err);
     });
   })
