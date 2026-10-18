@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 const links = [
@@ -9,17 +9,24 @@ const links = [
 ];
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false); // mobile menu state
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <header className="navbar">
-      <div className="navbar__inner container">
+    <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+      <div className="navbar__inner">
         <Link to="/" className="navbar__logo" onClick={() => setOpen(false)}>
-          Olive <span>&amp;</span> Oak
+          Olive <span>&</span> Oak
         </Link>
 
         {/* Desktop links */}
-        <nav className="navbar__links">
+        <nav className="navbar__links" aria-label="Main navigation">
           {links.map((l) => (
             <NavLink
               key={l.to}
@@ -40,15 +47,15 @@ export default function Navbar() {
           aria-expanded={open}
           onClick={() => setOpen(!open)}
         >
-          <span className={open ? 'bar bar--open' : 'bar'} />
-          <span className={open ? 'bar bar--open' : 'bar'} />
-          <span className={open ? 'bar bar--open' : 'bar'} />
+          <span className="navbar__bar" />
+          <span className="navbar__bar" />
+          <span className="navbar__bar" />
         </button>
       </div>
 
       {/* Mobile menu */}
       {open && (
-        <nav className="navbar__mobile">
+        <nav className="navbar__mobile" aria-label="Mobile navigation">
           {links.map((l) => (
             <NavLink
               key={l.to}

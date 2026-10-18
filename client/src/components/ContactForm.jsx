@@ -5,20 +5,17 @@ const initialForm = { name: '', email: '', message: '' };
 
 export default function ContactForm() {
   const [form, setForm] = useState(initialForm);
-  const [status, setStatus] = useState('idle'); // idle | sending | success | error
+  const [status, setStatus] = useState('idle');
   const [feedback, setFeedback] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
 
-  // Keep track of what the user types
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    // Clear the field error as soon as the user starts typing
     if (fieldErrors[e.target.name]) {
       setFieldErrors({ ...fieldErrors, [e.target.name]: '' });
     }
   };
 
-  // Validate before sending
   const validate = () => {
     const errors = {};
     if (!form.name.trim()) errors.name = 'Name is required.';
@@ -30,7 +27,6 @@ export default function ContactForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const errors = validate();
     setFieldErrors(errors);
     if (Object.keys(errors).length > 0) return;
@@ -44,36 +40,36 @@ export default function ContactForm() {
       setForm(initialForm);
     } catch (err) {
       setStatus('error');
-      setFeedback(
-        err.response?.data?.error || 'Something went wrong. Please try again.'
-      );
+      setFeedback(err.response?.data?.error || 'Something went wrong. Please try again.');
     }
   };
 
   return (
     <form className="form" onSubmit={handleSubmit} noValidate>
       <div className="form__field">
-        <label htmlFor="name">Name</label>
+        <label htmlFor="name">Your Name</label>
         <input
           id="name"
           name="name"
           type="text"
           value={form.name}
           onChange={handleChange}
-          placeholder="Your name"
+          placeholder="John Doe"
+          autoComplete="name"
         />
         {fieldErrors.name && <p className="form__error">{fieldErrors.name}</p>}
       </div>
 
       <div className="form__field">
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email">Email Address</label>
         <input
           id="email"
           name="email"
           type="email"
           value={form.email}
           onChange={handleChange}
-          placeholder="you@example.com"
+          placeholder="john@example.com"
+          autoComplete="email"
         />
         {fieldErrors.email && <p className="form__error">{fieldErrors.email}</p>}
       </div>
@@ -83,21 +79,36 @@ export default function ContactForm() {
         <textarea
           id="message"
           name="message"
-          rows="5"
+          rows={5}
           value={form.message}
           onChange={handleChange}
-          placeholder="How can we help?"
+          placeholder="How can we help you today?"
         />
         {fieldErrors.message && <p className="form__error">{fieldErrors.message}</p>}
       </div>
 
-      <button type="submit" className="btn btn--primary" disabled={status === 'sending'}>
-        {status === 'sending' ? 'Sending…' : 'Send Message'}
+      <button type="submit" className="btn btn--primary btn--block btn--lg" disabled={status === 'sending'}>
+        {status === 'sending' ? (
+          <>
+            <span className="loading__spinner" style={{ width: '18px', height: '18px', borderWidth: '2px', borderTopColor: 'var(--white)' }} />
+            Sending…
+          </>
+        ) : 'Send Message'}
       </button>
 
-      {/* Success / error feedback */}
-      {status === 'success' && <p className="form__success">{feedback}</p>}
-      {status === 'error' && <p className="form__error">{feedback}</p>}
+      {status === 'success' && (
+        <div className="alert alert--success" role="status">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span>{feedback}</span>
+        </div>
+      )}
+
+      {status === 'error' && (
+        <div className="alert alert--error" role="alert">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>
+          <span>{feedback}</span>
+        </div>
+      )}
     </form>
   );
 }
