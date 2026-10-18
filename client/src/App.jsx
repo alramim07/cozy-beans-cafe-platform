@@ -15,6 +15,7 @@ import AdminMessages from './pages/admin/AdminMessages.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import AdminLayout from './components/AdminLayout.jsx';
 import { AuthProvider } from './hooks/useAuth.jsx';
+import ScrollReveal from './components/ScrollReveal.jsx';
 
 // Scroll to top whenever the route changes
 function ScrollToTop() {
@@ -30,6 +31,7 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         <ScrollToTop />
+        <ScrollReveal />
         <div className="app">
           <Navbar />
           <main className="main">
