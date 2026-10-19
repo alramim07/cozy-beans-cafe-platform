@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.jsx';
 
 const adminNav = [
@@ -7,7 +7,7 @@ const adminNav = [
   { path: '/admin/messages', label: 'Messages', icon: ( <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> ) },
 ];
 
-export default function AdminLayout({ children }) {
+export default function AdminLayout() {
   const { logout, admin } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ export default function AdminLayout({ children }) {
         <header className="admin-header">
           <h1 className="admin-header__title">{document.title.replace(' - Olive & Oak Admin', '')}</h1>
         </header>
-        <div className="admin-content">{children}</div>
+        <div className="admin-content"><Outlet /></div>
       </main>
     </div>
   );
