@@ -71,8 +71,8 @@ mongoose
   .connect(MONGO_URI)
   .then(() => {
     console.log('MongoDB connected');
-    const server = app.listen(PORT, '127.0.0.1', () => {
-      console.log(`Olive & Oak API running on http://localhost:${PORT}`);
+    const server = app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Olive & Oak API running on port ${PORT}`);
       console.log('Server is listening...');
     });
     server.on('error', (err) => {
