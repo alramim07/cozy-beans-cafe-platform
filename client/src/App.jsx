@@ -32,36 +32,45 @@ export default function App() {
       <BrowserRouter>
         <ScrollToTop />
         <ScrollReveal />
-        <div className="app">
-          <Navbar />
-          <main className="main">
-            <Routes>
-              {/* Public routes */}
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/menu" element={<Menu />} />
-              <Route path="/contact" element={<Contact />} />
-
-              {/* Admin login (public) */}
-              <Route path="/admin/login" element={<AdminLogin />} />
-
-              {/* Protected admin routes */}
-              <Route
-                element={
-                  <ProtectedRoute>
-                    <AdminLayout />
-                  </ProtectedRoute>
-                }
-              >
-                <Route path="/admin" element={<AdminDashboard />} />
-                <Route path="/admin/menu" element={<AdminMenu />} />
-                <Route path="/admin/messages" element={<AdminMessages />} />
-              </Route>
-            </Routes>
-          </main>
-          <Footer />
-        </div>
+        <AppRoutes />
       </BrowserRouter>
     </AuthProvider>
+  );
+}
+
+function AppRoutes() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
+  return (
+    <div className="app">
+      {!isAdminRoute && <Navbar />}
+      <main className="main">
+        <Routes>
+          {/* Public routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/menu" element={<Menu />} />
+          <Route path="/contact" element={<Contact />} />
+
+          {/* Admin login (public) */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+
+          {/* Protected admin routes */}
+          <Route
+            element={
+              <ProtectedRoute>
+                <AdminLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/menu" element={<AdminMenu />} />
+            <Route path="/admin/messages" element={<AdminMessages />} />
+          </Route>
+        </Routes>
+      </main>
+      {!isAdminRoute && <Footer />}
+    </div>
   );
 }
