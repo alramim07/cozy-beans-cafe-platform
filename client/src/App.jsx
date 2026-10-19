@@ -12,6 +12,7 @@ import AdminLogin from './pages/admin/AdminLogin.jsx';
 import AdminDashboard from './pages/admin/AdminDashboard.jsx';
 import AdminMenu from './pages/admin/AdminMenu.jsx';
 import AdminMessages from './pages/admin/AdminMessages.jsx';
+import AdminAbout from './pages/admin/AdminAbout.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import AdminLayout from './components/AdminLayout.jsx';
 import { AuthProvider } from './hooks/useAuth.jsx';
@@ -67,6 +68,7 @@ function AppRoutes() {
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/menu" element={<AdminMenu />} />
             <Route path="/admin/messages" element={<AdminMessages />} />
+            <Route path="/admin/about" element={<AdminAbout />} />
           </Route>
         </Routes>
       </main>
