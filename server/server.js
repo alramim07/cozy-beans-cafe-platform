@@ -8,6 +8,8 @@ const mongoose = require('mongoose');
 const menuRoutes = require('./routes/menuRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const settingsRoutes = require('./routes/settingsRoutes');
+const aboutRoutes = require('./routes/aboutRoutes');
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (err) => {
@@ -51,6 +53,8 @@ app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 // Public API
 app.use('/api/menu', menuRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/settings', settingsRoutes);
+app.use('/api/about', aboutRoutes);
 
 // Admin API (protected)
 app.use('/api/admin', adminRoutes);

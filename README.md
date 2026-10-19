@@ -1,15 +1,15 @@
-# The Cozy Beans ☕
+# Olive & Oak Café ☕🌿
 
-A modern, clean, mobile-friendly café website built with the **MERN stack** (MongoDB, Express, React, Node.js).
+A modern, responsive, full-stack café website built with the **MERN stack** (MongoDB, Express, React, Node.js).
 
-> Fresh beans, warm vibes, good times.
+> Fresh food, warm drinks, friendly faces.
 
 ---
 
-## 🌐 Live Demo
-- **Frontend:** https://thecozybeans.netlify.app
-- **Admin Panel:** https://thecozybeans.netlify.app/admin/login
-- **API:** https://thecozybeans-api.onrender.com
+## 🌐 Live Deployments
+- **Frontend (Netlify):** [oliveandoak.netlify.app](https://oliveandoak.netlify.app)
+- **Backend API (Render):** [olive-oak-cafe-api.onrender.com](https://olive-oak-cafe-api.onrender.com)
+- **Admin Panel:** [oliveandoak.netlify.app/admin/login](https://oliveandoak.netlify.app/admin/login)
 
 ---
 
@@ -17,62 +17,61 @@ A modern, clean, mobile-friendly café website built with the **MERN stack** (Mo
 
 | Layer | Technology |
 |-------|------------|
-| **Frontend** | React 18, Vite, React Router, Axios |
-| **Styling** | Plain CSS (CSS Variables, Grid/Flexbox, Animations) |
+| **Frontend** | React 18, Vite, React Router 6, Axios |
+| **Styling** | Modern CSS (CSS Variables, Flexbox/Grid, Responsive Media Queries, Animations) |
 | **Backend** | Node.js, Express.js |
 | **Database** | MongoDB Atlas, Mongoose ODM |
-| **Auth** | JWT (httpOnly cookies), bcryptjs |
-| **Dev Tools** | Vite, ESLint, dotenv, cookie-parser |
+| **Authentication** | JWT (httpOnly cookies, cross-origin withCredentials), bcryptjs |
+| **Security & Utilities** | Helmet, Express Rate Limit, Cookie-Parser, CORS |
 
 ---
 
 ## ✨ Features
 
-### Public Site
-- **Home** — Hero with CTA, popular items carousel
-- **About** — Story + value cards with hover animations
-- **Menu** — Filterable tabs (Breakfast, Lunch, Drinks, Desserts)
-- **Contact** — Form with validation + map embed
-- **Responsive** — Mobile-first, hamburger nav, smooth animations
-- **Design System** — Playfair Display + DM Sans, CSS variables, hover/focus states
+### ☕ Public Customer Site
+- **Home Page** — Hero banner with CTAs, customer favorites showcase, and warm community styling.
+- **Our Story / About** — Company story and philosophy with interactive, animated value cards.
+- **Menu** — Categorized offerings (Breakfast, Lunch, Drinks, Desserts) with filter tabs and popularity tags.
+- **Contact & Visit Us** — Dynamic contact information, interactive Google Map embed, and inquiry contact form with instant validation.
+- **Dynamic Footer** — Automatically synchronizes opening hours, contact details, and social links with admin settings.
+- **Fully Responsive** — Optimized for mobile phones (320px+), tablets, laptops, and ultra-wide desktops.
 
-### Admin Panel (`/admin/login`)
-- **JWT Auth** — httpOnly cookies, bcrypt password hashing, rate limiting
-- **Dashboard** — Stats cards (total items, popular, unread messages)
-- **Menu Management** — Full CRUD with image preview, category badges
-- **Messages** — Read/unread toggle, delete, sortable table
+### 🔐 Admin Management Panel (`/admin`)
+- **Dashboard** — Live business overview with stat cards, menu category distributions, and recent message alerts.
+- **Menu Management** — Add, edit, preview, and delete menu items with pricing, category tags, and "Popular" flags.
+- **Messages Inbox** — Read, mark read/unread, and manage customer inquiries submitted through the contact form.
+- **About Page Editor** — Dynamically edit story headings, narrative text, story images, and custom value cards.
+- **Contact & Location Management** — Dynamically manage physical address, phone, email, Google Maps embed link (with real-time interactive preview), and daily opening hours.
+- **Collapsible Sidebar & Mobile Drawer** — Collapses to icon-only mode with custom café logo badge on desktop, and transforms into a drawer on mobile viewports.
 
 ---
 
 ## 📁 Project Structure
 
 ```
-thecozybeans/
+olive-oak-cafe/
 ├── client/                     # React frontend (Vite)
-│   ├── public/
 │   ├── src/
-│   │   ├── components/         # Navbar, Footer, Hero, MenuItemCard, ContactForm, ScrollReveal
+│   │   ├── components/         # Navbar, Footer, Hero, MenuItemCard, ContactForm, AdminLayout, ScrollReveal
 │   │   ├── pages/              # Home, About, Menu, Contact
-│   │   ├── pages/admin/        # AdminLogin, AdminDashboard, AdminMenu, AdminMessages
+│   │   ├── pages/admin/        # AdminLogin, AdminDashboard, AdminMenu, AdminMessages, AdminAbout, AdminSettings
 │   │   ├── hooks/              # useAuth, useScrollReveal
-│   │   ├── api.js              # Axios instance (proxied in dev)
-│   │   ├── App.jsx
+│   │   ├── api.js              # Axios instance configured with withCredentials
+│   │   ├── App.jsx             # Main routing and layout separation
 │   │   ├── main.jsx
-│   │   └── index.css           # Full design system (CSS variables, animations)
+│   │   └── index.css           # Complete café design system & responsive styling
 │   ├── index.html
 │   ├── vite.config.js
-│   ├── package.json
-│   └── .env.example
+│   └── package.json
 ├── server/                     # Express backend
-│   ├── middleware/             # auth.js (JWT verification)
-│   ├── models/                 # MenuItem.js, Message.js, Admin.js
-│   ├── routes/                 # menuRoutes, contactRoutes, adminRoutes
-│   ├── createAdmin.js          # Creates admin from .env
-│   ├── seed.js                 # Seeds 16 menu items
-│   ├── server.js               # Express entry point
-│   ├── package.json
-│   └── .env.example
-├── start-servers.ps1           # Windows dev startup script
+│   ├── middleware/             # auth.js (JWT authentication verification)
+│   ├── models/                 # MenuItem.js, Message.js, Admin.js, AboutContent.js, SiteSettings.js
+│   ├── routes/                 # menuRoutes, contactRoutes, adminRoutes, aboutRoutes, settingsRoutes
+│   ├── createAdmin.js          # Admin account initializer
+│   ├── seed.js                 # Database seed script for menu items
+│   ├── server.js               # Express application entry point
+│   └── package.json
+├── start-servers.ps1           # Local development startup script
 └── README.md
 ```
 
@@ -82,20 +81,21 @@ thecozybeans/
 
 ### Prerequisites
 - Node.js 18+
-- MongoDB Atlas account (free tier)
+- MongoDB Atlas cluster or local MongoDB instance
 
 ---
 
-### 1. Clone & Install
+### 1. Installation
 
 ```bash
-git clone https://github.com/alramim07/thecozybeans.git
-cd thecozybeans
+# Clone the repository
+git clone https://github.com/alramim07/Simple-Cafe-website.git
+cd Simple-Cafe-website
 
-# Install server deps
+# Install backend dependencies
 cd server && npm install
 
-# Install client deps
+# Install frontend dependencies
 cd ../client && npm install
 ```
 
@@ -103,52 +103,41 @@ cd ../client && npm install
 
 ### 2. Configure Environment
 
-**Server (`server/.env`):**
-```bash
-cd server
-cp .env.example .env
-# Edit .env with your values
-```
-
+**Backend (`server/.env`):**
 ```env
 PORT=5000
-MONGO_URI=mongodb+srv://<user>:<pass>@cluster0.9rrgxnq.mongodb.net/thecozybeans?retryWrites=true&w=majority
+MONGO_URI=your_mongodb_connection_string
 CLIENT_URL=http://localhost:5173
-JWT_SECRET=your-super-long-random-secret-key-here
-ADMIN_EMAIL=admin@thecozybeans.com
-ADMIN_PASSWORD=YourStrongPassword123!
+JWT_SECRET=your_super_secret_jwt_key
+ADMIN_EMAIL=admin@oliveandoak.cafe
+ADMIN_PASSWORD=YourSecurePassword123!
 ```
 
-**Client (`client/.env`):**
-```bash
-cd ../client
-cp .env.example .env
-```
-
+**Frontend (`client/.env`):**
 ```env
 VITE_API_URL=http://localhost:5000
 ```
 
 ---
 
-### 3. Seed Database
+### 3. Initialize Admin & Seed Data
 
 ```bash
 cd server
-npm run create-admin   # Creates admin user from .env
-npm run seed           # Seeds 16 menu items
+npm run create-admin   # Initializes admin user from .env
+npm run seed           # Populates initial menu items
 ```
 
 ---
 
-### 4. Run Locally (Development)
+### 4. Running Locally
 
-**Option A: Windows PowerShell Script**
+**Using the PowerShell script (Windows):**
 ```powershell
 .\start-servers.ps1
 ```
 
-**Option B: Two Terminals**
+**Or run in separate terminals:**
 ```bash
 # Terminal 1 - Backend (port 5000)
 cd server && npm run dev
@@ -157,145 +146,51 @@ cd server && npm run dev
 cd client && npm run dev
 ```
 
-Open **http://localhost:5173**
+Visit:
+- Website: **http://localhost:5173**
+- Admin Panel: **http://localhost:5173/admin/login**
 
 ---
 
-## 🔐 Environment Variables Explained
+## 📡 API Reference
 
-### `JWT_SECRET`
-**Where to find/generate:** You create this yourself. It must be a **long, random string** used to sign JWT tokens.
-
-**Generate one:**
-```bash
-# Option 1: Node.js
-node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
-
-# Option 2: OpenSSL
-openssl rand -hex 64
-
-# Option 3: Online (use only for dev)
-# https://generate-secret.vercel.app/64
-```
-
-**Example output:** `a3f2b9c8d4e6f1a8b7c9d0e2f4a6b8c0d2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c2`
-
-> ⚠️ **Never commit this to git.** Use different secrets for dev/prod.
-
----
-
-### `VITE_API_URL`
-**Where to find:** This is your **backend API URL**.
-
-| Environment | Value |
-|-------------|-------|
-| **Local dev** | `http://localhost:5000` |
-| **Production (Netlify + Render)** | `https://your-api-name.onrender.com` |
-| **Production (same domain)** | `/api` (if using Netlify Functions) |
-
-**In Netlify:** Go to Site Settings → Environment Variables → Add `VITE_API_URL` with your Render API URL.
-
-**In Vite config:** The proxy handles this automatically in dev (`vite.config.js`):
-```js
-proxy: {
-  '/api': { target: 'http://127.0.0.1:5000', changeOrigin: true }
-}
-```
-
----
-
-## 🌍 Production Deployment
-
-### Backend → Render
-1. Go to https://dashboard.render.com → **New +** → **Web Service**
-2. Connect GitHub → `alramim07/thecozybeans`
-3. **Root Directory:** `server`
-4. **Build Command:** `npm install`
-5. **Start Command:** `node server.js`
-6. **Environment Variables:**
-   ```
-   PORT=10000
-   MONGO_URI=mongodb+srv://...
-   CLIENT_URL=https://thecozybeans.netlify.app
-   JWT_SECRET=your-generated-secret
-   ADMIN_EMAIL=admin@thecozybeans.com
-   ADMIN_PASSWORD=YourStrongPassword123!
-   NODE_ENV=production
-   ```
-6. Deploy → Get URL: `https://thecozybeans-api.onrender.com`
-
-### Frontend → Netlify
-1. Go to https://app.netlify.com → **Add new site** → **Import from Git**
-2. Select GitHub → `alramim07/thecozybeans`
-3. **Base directory:** `client`
-4. **Build command:** `npm run build`
-5. **Publish directory:** `dist`
-6. **Environment Variable:**
-   ```
-   VITE_API_URL=https://thecozybeans-api.onrender.com
-   ```
-7. Deploy → Get URL: `https://thecozybeans.netlify.app`
-
-### Update CORS
-After Netlify deploy, update `CLIENT_URL` in Render:
-```
-CLIENT_URL=https://thecozybeans.netlify.app
-```
-
----
-
-## 📡 API Endpoints
-
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| GET | `/api/health` | No | Health check |
-| GET | `/api/menu` | No | All menu items |
-| GET | `/api/menu?category=breakfast` | No | Filter by category |
-| GET | `/api/menu/popular` | No | Popular items only |
-| POST | `/api/contact` | No | Submit contact form |
-| POST | `/api/admin/login` | No | Admin login |
-| POST | `/api/admin/logout` | Yes | Admin logout |
-| GET | `/api/admin/me` | Yes | Current admin |
-| GET | `/api/menu` | Yes | List all (admin) |
-| POST | `/api/menu` | Yes | Create menu item |
-| PUT | `/api/menu/:id` | Yes | Update menu item |
-| DELETE | `/api/menu/:id` | Yes | Delete menu item |
-| GET | `/api/contact` | Yes | List messages |
-| PATCH | `/api/contact/:id` | Yes | Mark read/unread |
-| DELETE | `/api/contact/:id` | Yes | Delete message |
+| Method | Endpoint | Access | Description |
+|--------|----------|--------|-------------|
+| GET | `/api/health` | Public | Server health status check |
+| GET | `/api/menu` | Public | List all menu items |
+| GET | `/api/menu/popular` | Public | List customer favorite items |
+| POST | `/api/contact` | Public | Submit customer contact message |
+| GET | `/api/about` | Public | Get About page content and value cards |
+| GET | `/api/settings` | Public | Get contact info, map URL, and opening hours |
+| POST | `/api/admin/login` | Public | Authenticate administrator |
+| POST | `/api/admin/logout` | Admin | Clear session cookie |
+| GET | `/api/admin/me` | Admin | Fetch authenticated admin details |
+| POST | `/api/menu` | Admin | Create new menu item |
+| PUT | `/api/menu/:id` | Admin | Update existing menu item |
+| DELETE | `/api/menu/:id` | Admin | Remove menu item |
+| GET | `/api/contact` | Admin | List all received contact messages |
+| PATCH | `/api/contact/:id` | Admin | Toggle message read/unread status |
+| DELETE | `/api/contact/:id` | Admin | Delete contact message |
+| PUT | `/api/about` | Admin | Update About story text, images, and cards |
+| PUT | `/api/settings` | Admin | Update contact details, Google Map, and hours |
 
 ---
 
 ## 🎨 Design System
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--brown-900` | `#2D1E16` | Primary text, dark backgrounds |
-| `--brown-700` | `#4A3427` | Headings, primary buttons |
-| `--brown-500` | `#6B4F3D` | Secondary text |
-| `--cream-50` | `#FDF6EC` | Page background |
-| `--cream-100` | `#F5ECD9` | Card backgrounds |
-| `--sage-500` | `#6B8E5C` | Primary accent, CTAs |
-| `--sage-700` | `#4A623A` | Hover states |
-| `--gold-500` | `#D4A574` | Highlights, badges |
-| `--terracotta-500` | `#C46D4A` | Danger actions |
+| Token | Hex | Role |
+|-------|-----|------|
+| `--brown-900` | `#2D1E16` | Main text color, dark header/footer accents |
+| `--brown-700` | `#4A3427` | Headings, primary brand tone |
+| `--cream-50` | `#FDF6EC` | Light warm background |
+| `--cream-100` | `#F5ECD9` | Card and secondary panel background |
+| `--sage-500` | `#6B8E5C` | Primary natural accent, active badges, CTAs |
+| `--gold-500` | `#D4A574` | Highlights, badges, decorative accents |
+| `--terracotta-500` | `#C46D4A` | Danger actions, unread indicators, tag accents |
 
-**Fonts:** Playfair Display (display) + DM Sans (UI)
-
----
-
-## 📝 Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start dev server (server: nodemon, client: Vite) |
-| `npm run build` | Build client for production |
-| `npm run seed` | Seed 16 menu items |
-| `npm run create-admin` | Create admin from .env |
-| `npm run dev` | Start both (via concurrently or script) |
+- **Fonts:** *Playfair Display* (Display & Headings) and *DM Sans* (Body & Interface).
 
 ---
 
 ## 📄 License
-
-MIT License - feel free to use for your own café!
+MIT License.

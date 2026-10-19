@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Hero from '../components/Hero.jsx';
 import MenuItemCard from '../components/MenuItemCard.jsx';
 import api from '../api.js';
@@ -90,8 +91,8 @@ export default function Home() {
               Stop by for breakfast, lunch, or just a perfect cup of coffee. We can't wait to serve you.
             </p>
             <div className="reveal reveal--delay-2" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <a href="/menu" className="btn btn--primary btn--lg">Explore Full Menu</a>
-              <a href="/contact" className="btn btn--secondary btn--lg">Get Directions</a>
+              <Link to="/menu" className="btn btn--primary btn--lg">Explore Full Menu</Link>
+              <Link to="/contact" className="btn btn--secondary btn--lg">Get Directions</Link>
             </div>
           </div>
         </div>

@@ -13,6 +13,7 @@ import AdminDashboard from './pages/admin/AdminDashboard.jsx';
 import AdminMenu from './pages/admin/AdminMenu.jsx';
 import AdminMessages from './pages/admin/AdminMessages.jsx';
 import AdminAbout from './pages/admin/AdminAbout.jsx';
+import AdminSettings from './pages/admin/AdminSettings.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import AdminLayout from './components/AdminLayout.jsx';
 import { AuthProvider } from './hooks/useAuth.jsx';
@@ -43,36 +44,44 @@ function AppRoutes() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
 
+  /* Admin routes render outside the public .app/.main wrapper
+     so they don't inherit the 72px navbar padding-top */
+  if (isAdminRoute) {
+    return (
+      <Routes>
+        {/* Admin login (public, no layout) */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+
+        {/* Protected admin routes */}
+        <Route
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/menu" element={<AdminMenu />} />
+          <Route path="/admin/messages" element={<AdminMessages />} />
+          <Route path="/admin/about" element={<AdminAbout />} />
+          <Route path="/admin/settings" element={<AdminSettings />} />
+        </Route>
+      </Routes>
+    );
+  }
+
   return (
     <div className="app">
-      {!isAdminRoute && <Navbar />}
+      <Navbar />
       <main className="main">
         <Routes>
-          {/* Public routes */}
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/contact" element={<Contact />} />
-
-          {/* Admin login (public) */}
-          <Route path="/admin/login" element={<AdminLogin />} />
-
-          {/* Protected admin routes */}
-          <Route
-            element={
-              <ProtectedRoute>
-                <AdminLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/menu" element={<AdminMenu />} />
-            <Route path="/admin/messages" element={<AdminMessages />} />
-            <Route path="/admin/about" element={<AdminAbout />} />
-          </Route>
         </Routes>
       </main>
-      {!isAdminRoute && <Footer />}
+      <Footer />
     </div>
   );
 }

@@ -1,5 +1,12 @@
 node_modules/
 dist/
+client/dist/
 .env
+.env.*
+!.env.example
 .DS_Store
 *.log
+*.err
+.playwright-mcp/
+*.png
+

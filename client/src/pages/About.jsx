@@ -60,7 +60,7 @@ export default function About() {
         </header>
 
         <div className="grid grid--values" style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <article className="reveal" style={{ gridColumn: '1 / -1', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'center' }}>
+          <article className="reveal about-story" style={{ gridColumn: '1 / -1' }}>
             <div>
               <span className="eyebrow" style={{ color: 'var(--terracotta-500)' }}>Since 2020</span>
               <h3 className="section__title" style={{ textAlign: 'left', fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', marginBottom: '1.5rem' }}>
