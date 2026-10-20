@@ -1,4 +1,4 @@
-# Olive & Oak Café ☕🌿
+# The Cozy Beans ☕🌿
 
 A modern, responsive, full-stack café website built with the **MERN stack** (MongoDB, Express, React, Node.js).
 
@@ -7,9 +7,8 @@ A modern, responsive, full-stack café website built with the **MERN stack** (Mo
 ---
 
 ## 🌐 Live Deployments
-- **Frontend (Netlify):** [oliveandoak.netlify.app](https://oliveandoak.netlify.app)
-- **Backend API (Render):** [olive-oak-cafe-api.onrender.com](https://olive-oak-cafe-api.onrender.com)
-- **Admin Panel:** [oliveandoak.netlify.app/admin/login](https://oliveandoak.netlify.app/admin/login)
+- **Frontend (Netlify):** [thecozybeans.netlify.app](https://thecozybeans.netlify.app)
+- **Admin Panel:** [thecozybeans.netlify.app/admin/login](https://thecozybeans.netlify.app/admin/login)
 
 ---
 
