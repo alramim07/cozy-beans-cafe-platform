@@ -1,195 +1,179 @@
-# The Cozy Beans ☕🌿
+# The Cozy Beans — Full-Stack Restaurant & Cafe Management Platform
 
-A modern, responsive, full-stack café website built with the **MERN stack** (MongoDB, Express, React, Node.js).
+[![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
+[![Express](https://img.shields.io/badge/Express-4.x-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas%20%7C%20Mongoose-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com)
+[![Netlify](https://img.shields.io/badge/Deployed%20on-Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://thecozybeans.netlify.app)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)]()
 
-> Fresh food, warm drinks, friendly faces.
-
----
-
-## 🌐 Live Deployments
-- **Frontend (Netlify):** [thecozybeans.netlify.app](https://thecozybeans.netlify.app)
-- **Admin Panel:** [thecozybeans.netlify.app/admin/login](https://thecozybeans.netlify.app/admin/login)
-
----
-
-## 🛠 Tech Stack
-
-| Layer | Technology |
-|-------|------------|
-| **Frontend** | React 18, Vite, React Router 6, Axios |
-| **Styling** | Modern CSS (CSS Variables, Flexbox/Grid, Responsive Media Queries, Animations) |
-| **Backend** | Node.js, Express.js |
-| **Database** | MongoDB Atlas, Mongoose ODM |
-| **Authentication** | JWT (httpOnly cookies, cross-origin withCredentials), bcryptjs |
-| **Security & Utilities** | Helmet, Express Rate Limit, Cookie-Parser, CORS |
+A modern, responsive, full-stack **Restaurant & Cafe Ordering Management Platform** built with the **MERN stack** (MongoDB, Express, React, Node.js). Features customer-facing categorized menu browsing, dynamic contact management with interactive Google Maps integration, and an administrative control panel with JWT cookie authentication, real-time message moderation, and CMS content editing.
 
 ---
 
-## ✨ Features
-
-### ☕ Public Customer Site
-- **Home Page** — Hero banner with CTAs, customer favorites showcase, and warm community styling.
-- **Our Story / About** — Company story and philosophy with interactive, animated value cards.
-- **Menu** — Categorized offerings (Breakfast, Lunch, Drinks, Desserts) with filter tabs and popularity tags.
-- **Contact & Visit Us** — Dynamic contact information, interactive Google Map embed, and inquiry contact form with instant validation.
-- **Dynamic Footer** — Automatically synchronizes opening hours, contact details, and social links with admin settings.
-- **Fully Responsive** — Optimized for mobile phones (320px+), tablets, laptops, and ultra-wide desktops.
-
-### 🔐 Admin Management Panel (`/admin`)
-- **Dashboard** — Live business overview with stat cards, menu category distributions, and recent message alerts.
-- **Menu Management** — Add, edit, preview, and delete menu items with pricing, category tags, and "Popular" flags.
-- **Messages Inbox** — Read, mark read/unread, and manage customer inquiries submitted through the contact form.
-- **About Page Editor** — Dynamically edit story headings, narrative text, story images, and custom value cards.
-- **Contact & Location Management** — Dynamically manage physical address, phone, email, Google Maps embed link (with real-time interactive preview), and daily opening hours.
-- **Collapsible Sidebar & Mobile Drawer** — Collapses to icon-only mode with custom café logo badge on desktop, and transforms into a drawer on mobile viewports.
+## Live Deployments & Preview
+- **Public Customer Portal (Netlify):** [thecozybeans.netlify.app](https://thecozybeans.netlify.app)
+- **Administrative Portal:** [thecozybeans.netlify.app/admin/login](https://thecozybeans.netlify.app/admin/login)
 
 ---
 
-## 📁 Project Structure
+## System Architecture
+
+```mermaid
+flowchart TD
+    subgraph Frontend["Client-Side (React 18 + Vite)"]
+        SPA["React SPA & Router v6"]
+        AXIOS["Axios Interceptor (withCredentials)"]
+        UI["Responsive Design System (CSS Variables)"]
+    end
+
+    subgraph Backend["API Server (Node.js & Express)"]
+        AUTH["JWT httpOnly Cookie Guard"]
+        SECURITY["Helmet + Express Rate Limit + CORS"]
+        ROUTERS["API Routers (Menu, Contact, Admin, Content)"]
+    end
+
+    subgraph Database["Persistence Layer"]
+        MONGO[("MongoDB Atlas Cloud Database")]
+    end
+
+    SPA --> AXIOS
+    UI --> SPA
+    AXIOS -->|CORS with Credentials| SECURITY
+    SECURITY --> AUTH
+    AUTH --> ROUTERS
+    ROUTERS -->|Mongoose ODM| MONGO
+```
+
+---
+
+## Core Features
+
+### 1. Public Customer Experience
+- **Interactive Menu Showcase:** Filterable categorized offerings (Breakfast, Lunch, Drinks, Desserts) with popularity badges and dynamic pricing.
+- **Dynamic Story & About Page:** Company story and philosophy with interactive, animated value proposition cards.
+- **Location & Contact Integration:** Real-time business hours, dynamic phone/email links, and interactive Google Maps embed.
+- **Customer Inquiry Desk:** Validated contact submission form dispatching inquiries directly to the administrative inbox.
+- **Responsive Architecture:** Pixel-perfect layout adaptation from 320px mobile viewports up to 4K ultra-wide screens.
+
+### 2. Administrative Control Suite (`/admin`)
+- **Executive Metric Dashboard:** Live overview cards summarizing total menu offerings, message activity, and category distribution.
+- **Menu Catalog Management:** Real-time CRUD operations to add, modify, preview, price, and flag featured dishes.
+- **Inquiry Inbox & Moderation:** Read, filter, toggle read/unread status, and archive incoming customer feedback.
+- **Content Management (CMS):** Edit story text, upload showcase banners, and configure opening hours without rebuilding frontend assets.
+- **Collapsible Responsive Navigation:** Desktop icon-only sidebar minimizing screen footprint, converting to an overlay drawer on mobile viewports.
+
+---
+
+## Technology Stack
+
+| Layer | Technologies |
+|---|---|
+| **Frontend Framework** | React 18, Vite, React Router v6, Axios |
+| **Styling & Design System** | Native Modern CSS (CSS Variables, Flexbox, CSS Grid, ScrollReveal Animations) |
+| **Backend Runtime** | Node.js, Express.js |
+| **Database & ODM** | MongoDB Atlas, Mongoose ODM |
+| **Authentication & Security** | JWT (httpOnly Secure Cookies), bcryptjs password hashing, Helmet, Express Rate Limit, CORS |
+| **Hosting & Deployment** | Netlify (Frontend SPA), Cloud Node Server |
+
+---
+
+## RESTful API Specifications
+
+| Method | Endpoint | Access Level | Description |
+|---|---|---|---|
+| `GET` | `/api/health` | Public | Automated health and readiness check |
+| `GET` | `/api/menu` | Public | Fetch all categorized menu offerings |
+| `GET` | `/api/menu/popular` | Public | Retrieve curated customer favorites |
+| `POST` | `/api/contact` | Public | Dispatch customer contact inquiry |
+| `GET` | `/api/about` | Public | Retrieve dynamic About story and value cards |
+| `GET` | `/api/settings` | Public | Fetch hours, location coordinates, and metadata |
+| `POST` | `/api/admin/login` | Public | Authenticate administrator & set httpOnly cookie |
+| `POST` | `/api/admin/logout`| Admin | Clear active session cookie |
+| `GET` | `/api/admin/me` | Admin | Validate active session token |
+| `POST` | `/api/menu` | Admin | Add new menu item to catalog |
+| `PUT` | `/api/menu/:id` | Admin | Update existing menu pricing and details |
+| `DELETE`| `/api/menu/:id` | Admin | Remove dish from catalog |
+| `GET` | `/api/contact` | Admin | List all received customer feedback |
+| `PATCH` | `/api/contact/:id`| Admin | Toggle message read/unread status |
+| `DELETE`| `/api/contact/:id`| Admin | Delete message |
+
+---
+
+## Project Structure
 
 ```
-olive-oak-cafe/
-├── client/                     # React frontend (Vite)
+simple-cafe-management/
+├── client/                           # React 18 frontend (Vite)
 │   ├── src/
-│   │   ├── components/         # Navbar, Footer, Hero, MenuItemCard, ContactForm, AdminLayout, ScrollReveal
-│   │   ├── pages/              # Home, About, Menu, Contact
-│   │   ├── pages/admin/        # AdminLogin, AdminDashboard, AdminMenu, AdminMessages, AdminAbout, AdminSettings
-│   │   ├── hooks/              # useAuth, useScrollReveal
-│   │   ├── api.js              # Axios instance configured with withCredentials
-│   │   ├── App.jsx             # Main routing and layout separation
-│   │   ├── main.jsx
-│   │   └── index.css           # Complete café design system & responsive styling
-│   ├── index.html
-│   ├── vite.config.js
+│   │   ├── components/               # Navbar, Footer, Hero, MenuItemCard, ContactForm
+│   │   ├── pages/                    # Home, About, Menu, Contact
+│   │   │   └── admin/                # AdminDashboard, MenuManager, Messages, Settings
+│   │   ├── hooks/                    # useAuth, useScrollReveal
+│   │   ├── api.js                    # Axios instance configured with withCredentials
+│   │   └── index.css                 # Complete design system & custom properties
 │   └── package.json
-├── server/                     # Express backend
-│   ├── middleware/             # auth.js (JWT authentication verification)
-│   ├── models/                 # MenuItem.js, Message.js, Admin.js, AboutContent.js, SiteSettings.js
-│   ├── routes/                 # menuRoutes, contactRoutes, adminRoutes, aboutRoutes, settingsRoutes
-│   ├── createAdmin.js          # Admin account initializer
-│   ├── seed.js                 # Database seed script for menu items
-│   ├── server.js               # Express application entry point
+├── server/                           # Express backend
+│   ├── middleware/                   # JWT authentication & rate limiters
+│   ├── models/                       # MenuItem.js, Message.js, Admin.js, SiteSettings.js
+│   ├── routes/                       # menuRoutes, contactRoutes, adminRoutes
+│   ├── server.js                     # Application entry point
 │   └── package.json
-├── start-servers.ps1           # Local development startup script
-└── README.md
+├── start-servers.ps1                 # Windows dual-server bootstrapper
+└── netlify.toml                      # Netlify SPA redirect rules
 ```
 
 ---
 
-## 🚀 Getting Started
+## Local Development & Setup
 
 ### Prerequisites
-- Node.js 18+
-- MongoDB Atlas cluster or local MongoDB instance
+- Node.js `>= 18.x`
+- MongoDB database (local instance or MongoDB Atlas connection URI)
 
----
-
-### 1. Installation
+### Setup Instructions
 
 ```bash
-# Clone the repository
-git clone https://github.com/alramim07/Simple-Cafe-website.git
-cd Simple-Cafe-website
+# 1. Clone repository
+git clone https://github.com/alramim07/simple-cafe-management.git
+cd simple-cafe-management
 
-# Install backend dependencies
-cd server && npm install
-
-# Install frontend dependencies
-cd ../client && npm install
-```
-
----
-
-### 2. Configure Environment
-
-**Backend (`server/.env`):**
-```env
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-CLIENT_URL=http://localhost:5173
-JWT_SECRET=your_super_secret_jwt_key
-ADMIN_EMAIL=admin@oliveandoak.cafe
-ADMIN_PASSWORD=YourSecurePassword123!
-```
-
-**Frontend (`client/.env`):**
-```env
-VITE_API_URL=http://localhost:5000
-```
-
----
-
-### 3. Initialize Admin & Seed Data
-
-```bash
+# 2. Install backend dependencies
 cd server
-npm run create-admin   # Initializes admin user from .env
-npm run seed           # Populates initial menu items
-```
+npm install
 
----
+# 3. Configure backend environment (server/.env)
+# PORT=5000
+# MONGO_URI=your_mongodb_atlas_connection_string
+# CLIENT_URL=http://localhost:5173
+# JWT_SECRET=your_jwt_private_secret_key
+# ADMIN_EMAIL=admin@example.com
+# ADMIN_PASSWORD=YourSecurePassword123!
 
-### 4. Running Locally
+# 4. Initialize administrator account & seed menu data
+npm run create-admin
+npm run seed
 
-**Using the PowerShell script (Windows):**
-```powershell
+# 5. Install frontend dependencies
+cd ../client
+npm install
+
+# 6. Configure frontend environment (client/.env)
+# VITE_API_URL=http://localhost:5000
+
+# 7. Start both servers concurrently
+# On Windows PowerShell:
 .\start-servers.ps1
+
+# Or run separately:
+# Terminal 1: cd server && npm run dev
+# Terminal 2: cd client && npm run dev
 ```
 
-**Or run in separate terminals:**
-```bash
-# Terminal 1 - Backend (port 5000)
-cd server && npm run dev
-
-# Terminal 2 - Frontend (port 5173)
-cd client && npm run dev
-```
-
-Visit:
-- Website: **http://localhost:5173**
-- Admin Panel: **http://localhost:5173/admin/login**
+- Public Frontend: **`http://localhost:5173`**
+- Administrative Suite: **`http://localhost:5173/admin/login`**
 
 ---
 
-## 📡 API Reference
-
-| Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| GET | `/api/health` | Public | Server health status check |
-| GET | `/api/menu` | Public | List all menu items |
-| GET | `/api/menu/popular` | Public | List customer favorite items |
-| POST | `/api/contact` | Public | Submit customer contact message |
-| GET | `/api/about` | Public | Get About page content and value cards |
-| GET | `/api/settings` | Public | Get contact info, map URL, and opening hours |
-| POST | `/api/admin/login` | Public | Authenticate administrator |
-| POST | `/api/admin/logout` | Admin | Clear session cookie |
-| GET | `/api/admin/me` | Admin | Fetch authenticated admin details |
-| POST | `/api/menu` | Admin | Create new menu item |
-| PUT | `/api/menu/:id` | Admin | Update existing menu item |
-| DELETE | `/api/menu/:id` | Admin | Remove menu item |
-| GET | `/api/contact` | Admin | List all received contact messages |
-| PATCH | `/api/contact/:id` | Admin | Toggle message read/unread status |
-| DELETE | `/api/contact/:id` | Admin | Delete contact message |
-| PUT | `/api/about` | Admin | Update About story text, images, and cards |
-| PUT | `/api/settings` | Admin | Update contact details, Google Map, and hours |
-
----
-
-## 🎨 Design System
-
-| Token | Hex | Role |
-|-------|-----|------|
-| `--brown-900` | `#2D1E16` | Main text color, dark header/footer accents |
-| `--brown-700` | `#4A3427` | Headings, primary brand tone |
-| `--cream-50` | `#FDF6EC` | Light warm background |
-| `--cream-100` | `#F5ECD9` | Card and secondary panel background |
-| `--sage-500` | `#6B8E5C` | Primary natural accent, active badges, CTAs |
-| `--gold-500` | `#D4A574` | Highlights, badges, decorative accents |
-| `--terracotta-500` | `#C46D4A` | Danger actions, unread indicators, tag accents |
-
-- **Fonts:** *Playfair Display* (Display & Headings) and *DM Sans* (Body & Interface).
-
----
-
-## 📄 License
-MIT License.
+## License
+This project is open-source software licensed under the [MIT License](LICENSE).
